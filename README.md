@@ -40,7 +40,7 @@ pip install pillow
 
 ## 🚀 Usage
 
-### 1️⃣ Convert PNG to NASM `.inc`/`.asm`
+### 1️⃣ Convert PNG to NASM `.inc`
 
 ```bash
 python3 main.py <input.png> <output.inc> [--format FORMAT] [--label LABEL] [--mode MODE]
