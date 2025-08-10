@@ -1,43 +1,104 @@
-# pngtonasm — Hiển thị ảnh từ file `.inc` trên terminal với NASM
+# 🖼 PNG to NASM Converter & Image Tools
 
-`pngtonasm` cho phép hiển thị ảnh được lưu ở định dạng `.inc` (RGB pixel data) trực tiếp trên terminal bằng ký tự khối `▀` (mỗi ký tự = 2 pixel dọc).
+A Python project that allows you to:
+- **Convert PNG images** to `.inc` or `.asm` files containing image data for NASM assembly.
+- **View `.inc` images** directly in the terminal using ANSI color.
+- **Resize images** easily with preset resolutions.
 
-## ⚙ Yêu cầu
-- Python 3.8+
-- Thư viện Pillow
+---
+
+## 📦 Features
+
+1. **`main.py`** – Convert PNG → `.inc`/`.asm`
+2. **`show.py`** – Display `.inc` images in terminal
+3. **`rescale.py`** – Resize images
+
+---
+
+## 🛠 Requirements
+
+- Python **3.x**
+- Python library:
 ```bash
 pip install pillow
 ```
-- Terminal hỗ trợ ANSI 24-bit color (TrueColor)
+- A terminal that supports **ANSI 24-bit color** (for best display results in `show.py`).
 
-## 🚀 Chạy file .inc
-1. Đặt `show.py` và các file `.inc` chung thư mục.
-2. Mở terminal tại thư mục đó.
-3. Chạy:
+---
+
+## 📂 Project Structure
+
+```
+.
+├── main.py       # PNG → NASM converter
+├── show.py       # Display .inc images
+├── rescale.py    # Resize images
+└── README.md     # Documentation
+```
+
+---
+
+## 🚀 Usage
+
+### 1️⃣ Convert PNG to NASM `.inc`/`.asm`
+
 ```bash
-python show.py
+python3 main.py <input.png> <output.inc> [--format FORMAT] [--label LABEL] [--mode MODE]
 ```
-4. Chọn số tương ứng với file `.inc` muốn hiển thị.
-5. Ảnh sẽ in ra **nguyên kích thước gốc**.  
-   - Nếu terminal không đủ rộng/dài → ảnh sẽ bị cắt/xé và cần **Ctrl + con lăn chuột** để xem hết.
 
-## 📌 Ghi chú
-- Mỗi ký tự `▀` hiển thị 2 pixel theo chiều dọc.
-- Để ảnh hiển thị đầy đủ, terminal cần ít nhất:
-  ```
-  chiều rộng terminal (cột)  >= chiều rộng ảnh (pixel)
-  chiều cao terminal (dòng) >= chiều cao ảnh / 2
-  ```
-- Nếu ảnh quá lớn so với terminal, hãy phóng to cửa sổ terminal hoặc dùng công cụ resize ảnh `.inc` trước khi in.
+**Options:**
+- `--format`:
+  - `rgb24` *(default)* – Each pixel stored as 3 RGB bytes.
+  - `rgb565` – 16-bit color.
+  - `rle` – RLE compression for RGB24.
+- `--label` – Base variable name in the `.inc` file.
+- `--mode`:
+  - `bytes` *(default)* – output as `db`.
+  - `words` – output as `dw` (for 16-bit only).
 
-## 🖼 Ví dụ
+**Example:**
 ```bash
-python show.py
-Chọn file .inc để hiển thị:
-1. sample.inc
-2. another.inc
-Nhập số: 1
+python3 main.py logo.png logo.inc --format rgb565 --label myimg --mode words
 ```
-Ảnh `sample.inc` sẽ hiển thị đúng từng pixel gốc trên terminal.
+**Or:**
+```bash
+python3 main.py logo.png logo.inc
 ```
-Ảnh `sample.inc` sẽ hiển thị đúng từng pixel gốc trên terminal.
+
+---
+
+### 2️⃣ View `.inc` image in terminal
+
+```bash
+python3 show.py
+```
+- Select a `.inc` file from the list.
+- The image will be displayed directly in the terminal using the `▀` character with foreground/background colors.
+
+---
+
+### 3️⃣ Resize an image
+
+```bash
+python3 rescale.py
+```
+- Choose a preset resolution: `720p`, `480p`, `360p`, `240p`, `144p`, `96p`
+- Or select **Customize** to manually enter width and height.
+
+---
+
+## 📷 Example
+
+**Command:**
+```bash
+python3 main.py cat.png cat.inc --format rgb24
+python3 show.py
+```
+---
+
+## 📜 License
+Released under the **CC0 1.0 Universal (Public Domain Dedication)** – you may copy, modify, distribute, and use for any purpose without permission.
+
+See details at: [https://creativecommons.org/publicdomain/zero/1.0/](https://creativecommons.org/publicdomain/zero/1.0/)
+
+---
